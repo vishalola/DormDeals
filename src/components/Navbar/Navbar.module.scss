@@ -1,0 +1,18 @@
+#navbar {
+  height: 8vh;
+  width: 100vw;
+  padding: 0 10%;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: orange;
+}
+
+#navLogo {
+  font-size: 1.5rem;
+}
+#navLinks {
+  font-size: 1.2rem;
+}
