@@ -1,5 +1,109 @@
 .homePage {
   min-height: 100vh;
   width: 100%;
+  padding-top: 13vh;
   background-color: white;
+}
+
+#homeBanner {
+  width: 60vw;
+  height: 25vh;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.bannerImgBox {
+  flex: 33%;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  div {
+    width: inherit;
+    height: 50%;
+    img {
+      width: auto;
+      height: 100%;
+    }
+  }
+}
+
+#searchBox {
+  height: 3rem;
+  width: 40vw;
+  margin: 40px auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 1rem;
+  justify-content: space-between;
+  input {
+    padding: 0 20px;
+    height: inherit;
+    width: inherit;
+    border: 0.1rem solid rgb(186, 186, 186);
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-right: none;
+  }
+  input:focus {
+    border: 0.1rem solid rgb(137, 137, 137);
+    border-right: none;
+    outline: none;
+  }
+  span {
+    width: 6rem;
+    height: inherit;
+    background-color: greenyellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    img {
+      height: 60%;
+      width: auto;
+    }
+  }
+
+  span:hover {
+    background-color: rgb(171, 244, 62);
+  }
+}
+
+.bannerImgBox:hover {
+  filter: hue-rotate(330deg);
+}
+
+@media only screen and (max-width: 700px) {
+  .homePage {
+    min-height: 100vh;
+    width: 100%;
+    padding-top: 11vh;
+    background-color: white;
+  }
+  #homeBanner {
+    width: 90vw;
+    height: 18vh;
+  }
+
+  .bannerImgBox {
+    div {
+      height: 40%;
+    }
+  }
+
+  #searchBox {
+    height: 2.5rem;
+    width: 80vw;
+    margin: 20px auto;
+
+    input {
+      padding: 0 15px;
+    }
+  }
 }

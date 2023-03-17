@@ -11,11 +11,16 @@ function Login() {
         <p>Sign In</p>
         <form id={styles.loginForm}>
           <input type="text" placeholder="username" />
-          <input type="password" placeholder="password" />
+          <input
+            type="password"
+            placeholder="password"
+            minLength={8}
+            maxLength={16}
+          />
           <span id={styles.registerHere}>
-            not a user? sign up{" "}
+            not a user?{" "}
             <Link to="/register" style={{ color: "blue" }}>
-              here
+              sign up
             </Link>
           </span>
           <button type="submit">Login</button>

@@ -1,4 +1,7 @@
-const Dotenv = require("dotenv-webpack");
+require("dotenv").config();
+
 module.exports = {
-  plugins: [new Dotenv()],
+  env: {
+    REACT_APP_BASEURL: process.env.REACT_APP_BASEURL,
+  },
 };

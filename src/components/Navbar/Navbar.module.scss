@@ -1,13 +1,13 @@
 #navbar {
   height: 8vh;
   width: 100vw;
-  padding: 0 10%;
+  padding: 0 20vw;
   position: fixed;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: orange;
+  background-color: #89ffff;
 }
 
 #navLogo {
@@ -15,4 +15,30 @@
 }
 #navLinks {
   font-size: 1.2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  #registerNav {
+    border-left: 0.1rem solid black;
+    padding-left: 10px;
+  }
+}
+
+@media only screen and (max-width: 810px) {
+  #navbar {
+    padding: 0 5vw;
+  }
+  #navLogo {
+    font-size: 1.1rem;
+  }
+  #navLinks {
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    #registerNav {
+      border-left: 0.1rem solid black;
+      padding-left: 0.5rem;
+    }
+  }
 }

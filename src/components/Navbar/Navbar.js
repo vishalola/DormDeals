@@ -10,6 +10,11 @@ function Navbar() {
         <div>
           <Link to="/login">Login</Link>
         </div>
+        <div>
+          <Link id={styles.registerNav} to="/register">
+            Register
+          </Link>
+        </div>
       </div>
     </nav>
   );
