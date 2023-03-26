@@ -5,7 +5,6 @@
   padding: 0;
   border: 0;
   font-family: "Raleway", sans-serif;
-
   user-select: none;
 }
 
@@ -15,7 +14,7 @@ html {
 }
 
 body {
-  font-family: "Playfair Display", serif;
+  overflow-x: hidden;
 }
 
 a {

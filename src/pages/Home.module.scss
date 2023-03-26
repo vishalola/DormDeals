@@ -1,63 +1,42 @@
-.homePage {
-  min-height: 100vh;
-  width: 100%;
-  padding-top: 13vh;
-  background-color: white;
-}
-
-#homeBanner {
-  width: 60vw;
-  height: 25vh;
+#navbar {
+  height: 8vh;
+  width: 100vw;
+  padding: 0 20vw;
+  position: fixed;
   display: flex;
   flex-direction: row;
-  margin: 0 auto;
-  overflow: hidden;
-  border-radius: 1rem;
+  justify-content: space-between;
+  grid-template-rows: 8vh;
+  grid-template-columns: 33% 33% 33%;
+  align-items: center;
+  background-color: #89ffff;
 }
 
-.bannerImgBox {
-  flex: 33%;
-  height: inherit;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  div {
-    width: inherit;
-    height: 50%;
-    img {
-      width: auto;
-      height: 100%;
-    }
-  }
+#navLogo {
+  font-size: 1.5rem;
 }
 
 #searchBox {
-  height: 3rem;
-  width: 40vw;
-  margin: 40px auto;
+  height: 2.2rem;
+  width: 30vw;
   overflow: hidden;
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   justify-content: space-between;
   input {
     padding: 0 20px;
     height: inherit;
     width: inherit;
-    border: 0.1rem solid rgb(186, 186, 186);
-    border-top-left-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-    border-right: none;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
   }
   input:focus {
-    border: 0.1rem solid rgb(137, 137, 137);
-    border-right: none;
     outline: none;
   }
   span {
-    width: 6rem;
+    width: 4rem;
     height: inherit;
     background-color: greenyellow;
     display: flex;
@@ -75,35 +54,121 @@
   }
 }
 
-.bannerImgBox:hover {
-  filter: hue-rotate(330deg);
+#navLinks {
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  #registerNav {
+    border-left: 0.1rem solid black;
+    padding-left: 10px;
+  }
+}
+
+.homePage {
+  min-height: 100vh;
+  width: 100vw;
+  padding: 13vh 20vw;
+}
+
+#categories {
+  height: auto;
+  width: 60vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.bannerImg {
+  height: 7.5vw;
+  width: 7.5vw;
+  border-radius: 50%;
+  overflow: hidden;
+  img {
+    padding: 2vh;
+    height: inherit;
+    cursor: pointer;
+    width: inherit;
+  }
+}
+.bannerImg:hover {
+  img {
+    background-color: pink;
+  }
+}
+
+#productTitle {
+  width: 100%;
+  text-align: center;
+  margin: 20px 0 10px 0;
+  span {
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  #navbar {
+    padding: 0 15vw;
+  }
 }
 
 @media only screen and (max-width: 700px) {
+  #navbar {
+    padding: 0 5vw;
+  }
+  #navbar:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #89ffff;
+    z-index: -1;
+    left: 0;
+    top: 6vh;
+  }
+  #navLogo {
+    font-size: 1.1rem;
+  }
+  #navLinks {
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    #registerNav {
+      border-left: 0.1rem solid black;
+      padding-left: 0.5rem;
+    }
+  }
   .homePage {
     min-height: 100vh;
     width: 100%;
-    padding-top: 11vh;
+    padding: 17vh 5vw;
     background-color: white;
-  }
-  #homeBanner {
-    width: 90vw;
-    height: 18vh;
-  }
-
-  .bannerImgBox {
-    div {
-      height: 40%;
-    }
   }
 
   #searchBox {
     height: 2.5rem;
-    width: 80vw;
-    margin: 20px auto;
-
+    width: 90vw;
+    position: absolute;
+    top: 7vh;
     input {
       padding: 0 15px;
+    }
+  }
+  #categories {
+    width: 90vw;
+  }
+
+  .bannerImg {
+    height: 14.25vw;
+    width: 14.25vw;
+    img {
+      padding: 2vw;
+    }
+  }
+  #productTitle {
+    span {
+      font-size: 1rem;
     }
   }
 }

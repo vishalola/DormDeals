@@ -1,10 +1,10 @@
-import Navbar from "./components/Navbar/Navbar";
 import Register from "./pages/Register";
+import EmailVerify from "./pages/EmailVerify";
 import { Routes, Route } from "react-router-dom";
+import Sell from "./pages/Sell";
 import Home from "./pages/Home";
-import React from "react";
 import Login from "./pages/Login";
-
+import Profile from "./pages/Profile";
 function App() {
   return (
     <>
@@ -12,6 +12,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/users/:id/verify/:token/" element={<EmailVerify />} />
+        <Route path="/sell" element={<Sell />} />
       </Routes>
     </>
   );

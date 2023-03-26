@@ -117,7 +117,10 @@
   #loginLogo {
     opacity: 0.5;
   }
-  #cloud {
-    animation: cloud 30s infinite linear;
+  #sun,
+  #cloud,
+  #hill2,
+  #hill1 {
+    display: none;
   }
 }
