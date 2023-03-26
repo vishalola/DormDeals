@@ -6,10 +6,10 @@ import axios from "axios";
 
 function Sell() {
   const navigate = useNavigate();
-  const [cat, setCat] = useState("cycle");
+  const [cat, setCat] = useState("table");
   const [id, setId] = useState("");
-  const [cycle, setCycle] = useState(true);
-  const [table, setTable] = useState(false);
+  const [cycle, setCycle] = useState(false);
+  const [table, setTable] = useState(true);
   const [drafter, setDrafter] = useState(false);
   const [coat, setCoat] = useState(false);
   const [chair, setChair] = useState(false);
@@ -91,28 +91,48 @@ function Sell() {
   return (
     <div id={styles.sellPage}>
       <div id={styles.sellBox}>
-        <p>Sell</p>
-        <input
-          name="pname"
-          type="text"
-          placeholder="Product name"
-          value={data.pname}
-          onChange={handleChange}
-        ></input>
-        <input
-          name="pprice"
-          type="number"
-          placeholder="Rs. XYZ"
-          value={data.pprice}
-          onChange={handleChange}
-        ></input>
-        <input
-          name="pdate"
-          type="date"
-          placeholder="Date purchased"
-          value={data.pdate}
-          onChange={handleChange}
-        ></input>
+        <p className={styles.sellTitle}>Sell</p>
+        <div className={styles.sellinput}>
+          <span>Product name : </span>
+          <input
+            name="pname"
+            type="text"
+            placeholder="Product name"
+            value={data.pname}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className={styles.sellinput}>
+          <span>Product price : </span>
+
+          <input
+            name="pprice"
+            type="number"
+            placeholder="Rs. XYZ"
+            value={data.pprice}
+            onChange={handleChange}
+          ></input>
+        </div>
+        <div className={styles.sellinput}>
+          <span>Product info : </span>
+          <input
+            name="pdetail"
+            type="text"
+            placeholder="Product Description"
+            onChange={handleChange}
+          ></input>
+        </div>
+        <div className={styles.sellinput}>
+          <span>Date bought : </span>
+          <input
+            name="pdate"
+            type="date"
+            placeholder="Date purchased"
+            value={data.pdate}
+            onChange={handleChange}
+          ></input>
+        </div>
         <div className={styles.checkboxes}>
           <label htmlFor="table">
             <input
@@ -218,26 +238,26 @@ function Sell() {
             Other
           </label>
         </div>
-        <input
-          name="pdetail"
-          type="text"
-          placeholder="Product Description"
-          onChange={handleChange}
-        ></input>
-        <input
-          type="file"
-          name="pimage"
-          accept="image/*"
-          onChange={convertToBase64}
-        ></input>
-        <button type="button" onClick={handleSubmit}>
-          Submit
-        </button>
+
+        <div className={styles.sellinput}>
+          <span>Product image</span>
+          <input
+            type="file"
+            name="pimage"
+            accept="image/*"
+            onChange={convertToBase64}
+            style={{ border: "none" }}
+          ></input>
+        </div>
+
         {image === "" || image === null ? (
           ""
         ) : (
           <img src={image} alt="uploadedImage" />
         )}
+        <button type="button" onClick={handleSubmit}>
+          Submit
+        </button>
       </div>
     </div>
   );

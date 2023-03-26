@@ -136,8 +136,8 @@ function Profile() {
             {del ? "Delete " : "Log out from "}your Account
           </div>
           <div id={styles.logoutContext}>
-            Are you sure that you want to{" "}
-            {del ? "delete your account permanently" : "logout?"}
+            Are you sure you want to{" "}
+            {del ? "delete your account permanently?" : "logout?"}
           </div>
           <div id={styles.logoutBTNS}>
             <button onClick={handleCancel}>Cancel</button>
@@ -213,18 +213,8 @@ function Profile() {
           <button type="button" onClick={handleLogout}>
             Logout
           </button>
-        </div>
-        <div id={styles.deleteZone}>
-          <span>Danger Zone</span>
-          <p>
-            You can delete your account permanently by clicking this button.
-          </p>
-          <p>
-            This action cannot be undone, so be careful with deleting your
-            account
-          </p>
           <button type="button" onClick={handleDelete}>
-            Delete Account
+            Delete
           </button>
         </div>
       </div>

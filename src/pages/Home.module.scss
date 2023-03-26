@@ -5,6 +5,7 @@
   position: fixed;
   display: flex;
   flex-direction: row;
+  z-index: 100;
   justify-content: space-between;
   grid-template-rows: 8vh;
   grid-template-columns: 33% 33% 33%;
@@ -104,6 +105,13 @@
     font-size: 1.5rem;
     font-weight: 400;
   }
+}
+
+#productsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 30px;
 }
 
 @media only screen and (max-width: 900px) {

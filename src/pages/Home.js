@@ -9,6 +9,7 @@ import coat from "../assets/coat.svg";
 import all from "../assets/all.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Card from "../components/Card/Card";
 
 function Home() {
   const [allProd, setAllProd] = useState([]);
@@ -131,18 +132,7 @@ function Home() {
         </div>
         <div id={styles.productsContainer}>
           {disProd.map((ele, ind) => {
-            return (
-              <div key={ind}>
-                HII
-                <p>{ele.pname}</p>
-                <p>{ele.pprice}</p>
-                <p>{ele.pcat}</p>
-                <p>{ele.pdetail}</p>
-                <p>{ele.preg}</p>
-                <p>{ele.pdate}</p>
-                <img src={ele.pimage} alt="product" />
-              </div>
-            );
+            return <Card key={ind} ele={ele} />;
           })}
         </div>
       </div>
