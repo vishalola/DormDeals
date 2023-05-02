@@ -22,6 +22,7 @@ function Sell() {
     pdetail: "",
     pcat: "",
     pimage: "",
+    id: "",
   });
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -37,6 +38,9 @@ function Sell() {
       .then(function (response) {
         const id = response.data.userid;
         setId(id);
+        setData((prev) => {
+          return { ...prev, id: id };
+        });
         axios({
           method: "post",
           baseURL: "http://localhost:5000",

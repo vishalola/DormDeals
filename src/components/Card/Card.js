@@ -1,10 +1,10 @@
 import styles from "./Card.module.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Card({ ele }) {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/product/${ele.id}`, { data: ele });
+    navigate(`/product/${ele._id}`);
   };
   return (
     <div

@@ -5,6 +5,9 @@ import Sell from "./pages/Sell";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import Product from "./pages/Product";
+import FixDeal from "./pages/FixDeal";
+
 function App() {
   return (
     <>
@@ -15,6 +18,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/users/:id/verify/:token/" element={<EmailVerify />} />
         <Route path="/sell" element={<Sell />} />
+        <Route path="/buy-product/:prod/:seller/:buyer" element={<FixDeal />} />
+        <Route path="/product/:prod" element={<Product />} />
       </Routes>
     </>
   );
