@@ -14,9 +14,12 @@ function Product() {
   const [loading, setLoading] = useState(true);
   const [prodExist, setProdExist] = useState(false);
   const [id, setId] = useState("");
-  const [isMyProd, setIsMyProd] = useState(true);
+  const [isMyProd, setIsMyProd] = useState(false);
   const [valid, setValid] = useState(false);
+  const [sname, setSname] = useState("");
+  const [smail, setSmail] = useState("");
   const [data, setData] = useState({
+    sname: "",
     _id: "314",
     id: "",
     sellerId: "",
@@ -69,9 +72,8 @@ function Product() {
         console.log("SETID", response.data.userid);
         const myid = response.data.userid;
         setId(myid);
+        console.log(id);
         setValid(true);
-
-        setNotificationData(response.data.allNotifications);
         axios({
           method: "post",
           baseURL: "http://localhost:5000",
@@ -82,31 +84,30 @@ function Product() {
             console.log("SETID22");
             console.log(response.data.details.data);
             var flag = false;
-            console.log(
-              "response.data.id = ",
-              response.data.details.data.id,
-              "id  = ",
-              myid
-            );
-            if (response.data.details.data.id !== myid) {
-              setIsMyProd(false);
-            } else {
+            console.log("eed ", response.data.details.data.id.toString(), myid);
+
+            if (response.data.details.data.id.toString() === myid) {
               setIsMyProd(true);
+            } else {
+              setIsMyProd(false);
             }
             if (response.data.details.bid) {
-              response.data.details.bid.bids.forEach((element) => {
-                console.log(element.buyerId, data.id);
-                if (element.buyerId === myid) {
-                  console.log("HIIIIIIIIIIII");
+              for (let u = 0; u < response.data.details.bid.bids.length; u++) {
+                console.log(response.data.details.bid.bids[u].buyerId, myid);
+                if (
+                  response.data.details.bid.bids[u].buyerId.toString() === myid
+                ) {
                   flag = true;
-                  return;
+                  break;
                 }
-              });
+              }
 
               setExist(flag);
               setBid(response.data.details.bid);
             }
             setData(response.data.details.data);
+            setSname(response.data.details.name);
+            setSmail(response.data.details.mail);
             setbidAmount(data.pprice);
             setLoading(false);
             setProdExist(true);
@@ -115,10 +116,54 @@ function Product() {
             setLoading(false);
             console.log(error);
           });
+        setNotificationData(response.data.allNotifications);
       })
       .catch((err) => {
         console.log(err);
         setValid(false);
+      });
+
+    axios({
+      method: "post",
+      baseURL: "http://localhost:5000",
+      url: "/api/prodData",
+      data: { id: ppid },
+    })
+      .then(function (response) {
+        console.log("SETID22");
+        console.log(response.data.details.data);
+        var flag = false;
+        console.log("eed ", response.data.details.data.id.toString(), id);
+
+        if (response.data.details.data.id.toString() === id) {
+          setIsMyProd(true);
+        } else {
+          setIsMyProd(false);
+        }
+        if (response.data.details.bid) {
+          for (let u = 0; u < response.data.details.bid.bids.length; u++) {
+            console.log(response.data.details.bid.bids[u].buyerId, data.id);
+            if (
+              response.data.details.bid.bids[u].buyerId.toString() === data.id
+            ) {
+              flag = true;
+              return;
+            }
+          }
+
+          setExist(flag);
+          setBid(response.data.details.bid);
+        }
+        setData(response.data.details.data);
+        setSname(response.data.details.name);
+        setSmail(response.data.details.mail);
+        setbidAmount(data.pprice);
+        setLoading(false);
+        setProdExist(true);
+      })
+      .catch(function (error) {
+        setLoading(false);
+        console.log(error);
       });
   }, []);
 
@@ -132,7 +177,6 @@ function Product() {
     });
     setAddBid(false);
     const today = new Date();
-    console.log(today);
     axios({
       method: "post",
       baseURL: "http://localhost:5000",
@@ -367,12 +411,20 @@ function Product() {
                 <p id={styles.pname}>{data.pname}</p>
                 <p id={styles.pcat}> {data.pcat}</p>
                 <p id={styles.pdetail}>{data.pdetail}</p>
+                <p className={styles.pbought}>
+                  bought on : {data.pdate.slice(0, 10)}
+                </p>
+                <p className={styles.pbought}>
+                  sold by : {sname} ({smail})
+                </p>
               </div>
               <div className={styles.pricecon}>
                 <div id={styles.pprice}>Rs.{data.pprice}/-</div>
-                {valid ? (
+                {loading ? (
+                  <LoaderIcon />
+                ) : valid ? (
                   isMyProd ? (
-                    <></>
+                    <div></div>
                   ) : !exist ? (
                     <button
                       className={styles.addBidButton}
@@ -407,6 +459,33 @@ function Product() {
               {bid.sellerId !== "" ? (
                 <div style={{ marginBottom: "20px" }}>
                   {bid.bids.map((ele, ind) => {
+                    if (isMyProd) {
+                      return (
+                        <Link
+                          key={ind}
+                          to={`/buy-product/${bid.prodId}/${bid.sellerId}/${ele.buyerId}`}
+                          className={styles.bidheading}
+                        >
+                          <p
+                            style={{ background: "rgba(128, 128, 128, 0.022)" }}
+                          >
+                            {ele.regno}
+                          </p>
+                          <p
+                            style={{
+                              background: "rgba(128, 128, 128, 0.022)",
+                            }}
+                          >
+                            {ele.bidTime.slice(0, 10)}
+                          </p>
+                          <p
+                            style={{ background: "rgba(128, 128, 128, 0.022)" }}
+                          >
+                            {ele.bidPrice}
+                          </p>
+                        </Link>
+                      );
+                    }
                     return (
                       <div key={ind} className={styles.bidheading}>
                         <p style={{ background: "rgba(128, 128, 128, 0.022)" }}>

@@ -235,7 +235,9 @@
 #navLogo {
   font-size: 1.5rem;
 }
-
+.pbought {
+  font-size: 0.8rem;
+}
 #searchBox {
   height: 2.2rem;
   width: 30vw;
@@ -316,7 +318,7 @@
     top: 13vh;
     right: 5vw;
     width: 90vw;
-    min-height: 25vh;
+    min-height: 10vh;
     height: auto;
     background-color: rgb(239, 248, 255);
     overflow-x: hidden;

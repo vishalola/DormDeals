@@ -100,6 +100,50 @@
     border-bottom: 2px solid black;
   }
 }
+.mybidtitle {
+  font-size: 1.5rem;
+  margin-top: 30px;
+  margin: 20px 0;
+}
+.mybidcontainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.mybidname {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.mybidele {
+  background-color: #d9ffff;
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  img {
+    height: 15vh;
+    width: 20vh;
+  }
+  .mybidinform {
+    margin-left: 10px;
+  }
+  .mybidx {
+    padding: 0 20px;
+    img {
+      height: 3.5vh;
+      width: auto;
+      opacity: 50%;
+    }
+    background-color: rgb(246, 133, 133);
+    height: 15vh;
+    display: inherit;
+    align-items: center;
+    cursor: pointer;
+  }
+}
 
 #profileContainer {
   min-height: 80vh;
@@ -206,5 +250,28 @@
 
   #logoutTitle {
     font-size: 1.5rem;
+  }
+  .mybidtitle {
+    font-size: 1.3rem;
+    margin-top: 25px;
+    margin: 15px 0;
+  }
+  .mybidname {
+    font-size: 0.8rem;
+  }
+  .mybidele {
+    font-size: 0.6rem;
+    .mybidinform {
+      padding: 0 5px;
+      margin-left: 10px;
+    }
+    img {
+      height: 10vh;
+    }
+    .mybidx {
+      padding: 0 15px;
+
+      height: 10vh;
+    }
   }
 }
