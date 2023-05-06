@@ -18,6 +18,7 @@ function Product() {
   const [valid, setValid] = useState(false);
   const [sname, setSname] = useState("");
   const [smail, setSmail] = useState("");
+  const [sphone, setPhone] = useState("");
   const [data, setData] = useState({
     sname: "",
     _id: "314",
@@ -108,6 +109,7 @@ function Product() {
             setData(response.data.details.data);
             setSname(response.data.details.name);
             setSmail(response.data.details.mail);
+            setPhone(response.data.details.phone);
             setbidAmount(data.pprice);
             setLoading(false);
             setProdExist(true);
@@ -415,8 +417,13 @@ function Product() {
                   bought on : {data.pdate.slice(0, 10)}
                 </p>
                 <p className={styles.pbought}>
-                  sold by : {sname} ({smail})
+                  sold by : {sname} {valid ? smail : ""}
                 </p>
+                {valid ? (
+                  <p className={styles.pbought}>phone : {sphone}</p>
+                ) : (
+                  ""
+                )}
               </div>
               <div className={styles.pricecon}>
                 <div id={styles.pprice}>Rs.{data.pprice}/-</div>

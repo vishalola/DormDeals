@@ -14,6 +14,7 @@ import { LoaderIcon, toast } from "react-hot-toast";
 
 function Home() {
   const [loading, setLoading] = useState(true);
+  const [searchval, setsearchval] = useState("");
   const [allProd, setAllProd] = useState([]);
   const [notificationData, setNotificationData] = useState(
     Array({
@@ -168,8 +169,33 @@ function Home() {
       <nav id={styles.navbar}>
         <div id={styles.navLogo}>buyNsell</div>
         <div id={styles.searchBox}>
-          <input placeholder="I am looking for ..." />
-          <span>
+          <input
+            value={searchval}
+            onChange={(e) => {
+              const val = e.target.value;
+              setsearchval(val);
+            }}
+            placeholder="I am looking for ..."
+          />
+          <span
+            onClick={() => {
+              console.log("Clicked");
+              axios({
+                method: "post",
+                baseURL: "http://localhost:5000",
+                url: "/api/searchproduct",
+                data: { searchval: searchval },
+              })
+                .then(function (response) {
+                  setAllProd(response.data.mysearchdata);
+                  setDisProd(response.data.mysearchdata);
+                })
+                .catch(function (error) {
+                  toast.error("Internal Error");
+                  console.log(error);
+                });
+            }}
+          >
             <img src={search} alt="search" />
           </span>
         </div>
