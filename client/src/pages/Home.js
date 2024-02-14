@@ -34,7 +34,7 @@ function Home() {
     const token = JSON.parse(localStorage.getItem("token"));
     axios({
       method: "post",
-      baseURL: "http://localhost:5000",
+      baseURL: `${process.env.REACT_APP_BASEURL}`,
       url: "/api",
       data: { token: token },
     })
@@ -49,7 +49,7 @@ function Home() {
       });
     axios({
       method: "post",
-      baseURL: "http://localhost:5000",
+      baseURL: `${process.env.REACT_APP_BASEURL}`,
       url: "/api/allprod",
       data: {},
     })
@@ -136,7 +136,7 @@ function Home() {
                         toast.success("Removed notification successfully");
                         axios({
                           method: "post",
-                          baseURL: "http://localhost:5000",
+                          baseURL: `${process.env.REACT_APP_BASEURL}`,
                           url: "/api/cancelnotification",
                           data: { prodid, bid },
                         })
@@ -182,7 +182,7 @@ function Home() {
               console.log("Clicked");
               axios({
                 method: "post",
-                baseURL: "http://localhost:5000",
+                baseURL: `${process.env.REACT_APP_BASEURL}`,
                 url: "/api/searchproduct",
                 data: { searchval: searchval },
               })

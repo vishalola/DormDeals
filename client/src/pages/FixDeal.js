@@ -28,7 +28,7 @@ function FixDeal() {
     setID({ productid, sellerid, buyerid });
     axios({
       method: "post",
-      baseURL: "http://localhost:5000",
+      baseURL: `${process.env.REACT_APP_BASEURL}`,
       url: "/api/fixdeal",
       data: { productid, sellerid, buyerid },
     })
@@ -60,7 +60,7 @@ function FixDeal() {
     });
     axios({
       method: "post",
-      baseURL: "http://localhost:5000",
+      baseURL: `${process.env.REACT_APP_BASEURL}`,
       url: "/api/confirmdeal",
       data: {
         productid: ID.productid,

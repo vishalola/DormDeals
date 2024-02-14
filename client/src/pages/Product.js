@@ -65,7 +65,7 @@ function Product() {
 
     axios({
       method: "post",
-      baseURL: "http://localhost:5000",
+      baseURL: `${process.env.REACT_APP_BASEURL}`,
       url: "/api",
       data: { token: token },
     })
@@ -77,7 +77,7 @@ function Product() {
         setValid(true);
         axios({
           method: "post",
-          baseURL: "http://localhost:5000",
+          baseURL: `${process.env.REACT_APP_BASEURL}`,
           url: "/api/prodData",
           data: { id: ppid },
         })
@@ -127,7 +127,7 @@ function Product() {
 
     axios({
       method: "post",
-      baseURL: "http://localhost:5000",
+      baseURL: `${process.env.REACT_APP_BASEURL}`,
       url: "/api/prodData",
       data: { id: ppid },
     })
@@ -181,7 +181,7 @@ function Product() {
     const today = new Date();
     axios({
       method: "post",
-      baseURL: "http://localhost:5000",
+      baseURL: `${process.env.REACT_APP_BASEURL}`,
       url: "/api/addbid",
       data: {
         biddata: {
@@ -221,7 +221,7 @@ function Product() {
     });
     axios({
       method: "post",
-      baseURL: "http://localhost:5000",
+      baseURL: `${process.env.REACT_APP_BASEURL}`,
       url: "/api/removebid",
       data: { productid: data._id, buyerId: id },
     })
@@ -290,7 +290,7 @@ function Product() {
                         toast.success("Removed notification successfully");
                         axios({
                           method: "post",
-                          baseURL: "http://localhost:5000",
+                          baseURL: `${process.env.REACT_APP_BASEURL}`,
                           url: "/api/cancelnotification",
                           data: { prodid, bid },
                         })

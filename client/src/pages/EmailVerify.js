@@ -18,7 +18,7 @@ function EmailVerify() {
     });
     const verifyEmail = async () => {
       try {
-        const url = `http://localhost:5000/api/users/${params.id}/verify/${params.token}`;
+        const url = `${process.env.REACT_APP_BASEURL}/api/users/${params.id}/verify/${params.token}`;
         const { data } = await axios.get(url);
         console.log(data);
         setVerified(true);

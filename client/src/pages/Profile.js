@@ -44,7 +44,7 @@ function Profile() {
     });
     axios({
       method: "post",
-      baseURL: "http://localhost:5000",
+      baseURL: `${process.env.REACT_APP_BASEURL}`,
       url: "/api/update",
       data: { newData: data, id: id },
     })
@@ -68,7 +68,7 @@ function Profile() {
     }
     axios({
       method: "post",
-      baseURL: "http://localhost:5000",
+      baseURL: `${process.env.REACT_APP_BASEURL}`,
       url: "/api",
       data: { token: token },
     })
@@ -77,7 +77,7 @@ function Profile() {
         setId(myid);
         axios({
           method: "post",
-          baseURL: "http://localhost:5000",
+          baseURL: `${process.env.REACT_APP_BASEURL}`,
           url: "/api/profile",
           data: { id: myid },
         })
@@ -115,7 +115,7 @@ function Profile() {
     localStorage.setItem("token", JSON.stringify(""));
     axios({
       method: "post",
-      baseURL: "http://localhost:5000",
+      baseURL: `${process.env.REACT_APP_BASEURL}`,
       url: "/api/logout",
       data: { id: id },
     })
@@ -129,7 +129,7 @@ function Profile() {
   const handleDeleteAcc = () => {
     axios({
       method: "post",
-      baseURL: "http://localhost:5000",
+      baseURL: `${process.env.REACT_APP_BASEURL}`,
       url: "/api/deleteAccount",
       data: { id: id },
     })
@@ -263,7 +263,7 @@ function Profile() {
                         toast.loading("Processing", { duration: 2000 });
                         axios({
                           method: "post",
-                          baseURL: "http://localhost:5000",
+                          baseURL: `${process.env.REACT_APP_BASEURL}`,
                           url: "/api/deletemybid",
                           data: { pid: ele.pid, bid: ele.bid },
                         })
@@ -306,7 +306,7 @@ function Profile() {
                       onClick={(e) => {
                         axios({
                           method: "post",
-                          baseURL: "http://localhost:5000",
+                          baseURL: `${process.env.REACT_APP_BASEURL}`,
                           url: "/api/deletemyprod",
                           data: { pid: ele.id },
                         })

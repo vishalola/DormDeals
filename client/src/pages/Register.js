@@ -73,7 +73,7 @@ function Register() {
       axios({
         method: "post",
         //   baseURL: `${process.env.REACT_APP_BASEURL}`,
-        baseURL: "http://localhost:5000",
+        baseURL: `${process.env.REACT_APP_BASEURL}`,
         url: "/api/register",
         data: data,
       })
