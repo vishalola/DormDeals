@@ -6,8 +6,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Product from "./pages/Product";
-import FixDeal from "./pages/FixDeal";
-
+import Cart from "./pages/cart";
+import Checkout from "./pages/checkout";
 function App() {
   return (
     <>
@@ -18,8 +18,9 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/users/:id/verify/:token/" element={<EmailVerify />} />
         <Route path="/sell" element={<Sell />} />
-        <Route path="/buy-product/:prod/:seller/:buyer" element={<FixDeal />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/product/:prod" element={<Product />} />
+        <Route path="/checkout" element={<Checkout/>} />
       </Routes>
     </>
   );

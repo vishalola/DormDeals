@@ -44,7 +44,7 @@ function Profile() {
     });
     axios({
       method: "post",
-      baseURL: `${process.env.REACT_APP_BASEURL}`,
+      baseURL: `${process.env.REACT_APP_API_URL}`,
       url: "/api/update",
       data: { newData: data, id: id },
     })
@@ -68,7 +68,7 @@ function Profile() {
     }
     axios({
       method: "post",
-      baseURL: `${process.env.REACT_APP_BASEURL}`,
+      baseURL: `${process.env.REACT_APP_API_URL}`,
       url: "/api",
       data: { token: token },
     })
@@ -77,7 +77,7 @@ function Profile() {
         setId(myid);
         axios({
           method: "post",
-          baseURL: `${process.env.REACT_APP_BASEURL}`,
+          baseURL: `${process.env.REACT_APP_API_URL}`,
           url: "/api/profile",
           data: { id: myid },
         })
@@ -115,7 +115,7 @@ function Profile() {
     localStorage.setItem("token", JSON.stringify(""));
     axios({
       method: "post",
-      baseURL: `${process.env.REACT_APP_BASEURL}`,
+      baseURL: `${process.env.REACT_APP_API_URL}`,
       url: "/api/logout",
       data: { id: id },
     })
@@ -129,7 +129,7 @@ function Profile() {
   const handleDeleteAcc = () => {
     axios({
       method: "post",
-      baseURL: `${process.env.REACT_APP_BASEURL}`,
+      baseURL: `${process.env.REACT_APP_API_URL}`,
       url: "/api/deleteAccount",
       data: { id: id },
     })
@@ -177,7 +177,6 @@ function Profile() {
         </span>
         <div className={styles.profileAttribute}>
           <span>Name</span>
-          <span>:</span>
           <input
             type="text"
             name="name"
@@ -187,7 +186,6 @@ function Profile() {
         </div>
         <div className={styles.profileAttribute}>
           <span>Mail</span>
-          <span>:</span>
           <input
             style={{ cursor: "default" }}
             name="mail"
@@ -197,7 +195,7 @@ function Profile() {
         </div>
         <div className={styles.profileAttribute}>
           <span>Year</span>
-          <span>:</span>
+         
           <input
             type="number"
             name="year"
@@ -207,7 +205,7 @@ function Profile() {
         </div>
         <div className={styles.profileAttribute}>
           <span>Course</span>
-          <span>:</span>
+          
           <input
             type="text"
             name="course"
@@ -217,12 +215,11 @@ function Profile() {
         </div>
         <div className={styles.profileAttribute}>
           <span>Address</span>
-          <span>:</span>
+         
           <input name="address" value={data.address} onChange={handleChange} />
         </div>
         <div className={styles.profileAttribute}>
           <span>Phone</span>
-          <span>:</span>
           <input
             name="phone"
             type="number"
@@ -241,48 +238,7 @@ function Profile() {
             Delete
           </button>
         </div>
-        <div>
-          <div className={styles.mybidtitle}>My Bids</div>
-          <div className={styles.mybidcontainer}>
-            {myBids.length !== 0 ? (
-              myBids.map((ele) => {
-                return (
-                  <div key={ele.pname} className={styles.mybidele}>
-                    <img src={ele.pimage} alt="" />
-                    <div className={styles.mybidinform}>
-                      <p className={styles.mybidname}>{ele.pname}</p>
-                      <p>bidded on : {ele.bidtime.slice(0, 10)}</p>
-                      <p>
-                        bid price : Rs. {ele.bidPrice} /- , product price : Rs.{" "}
-                        {ele.pprice} /-
-                      </p>
-                    </div>
-                    <div
-                      className={styles.mybidx}
-                      onClick={(e) => {
-                        toast.loading("Processing", { duration: 2000 });
-                        axios({
-                          method: "post",
-                          baseURL: `${process.env.REACT_APP_BASEURL}`,
-                          url: "/api/deletemybid",
-                          data: { pid: ele.pid, bid: ele.bid },
-                        })
-                          .then((res) => {
-                            toast.success("Bid deleted successfully!");
-                          })
-                          .catch((err) => console.log(err));
-                      }}
-                    >
-                      <img src={dust} alt="" />
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <></>
-            )}
-          </div>
-        </div>
+       
         <div>
           <div className={styles.mybidtitle}>My Products</div>
           <div className={styles.mybidcontainer}>
@@ -306,7 +262,7 @@ function Profile() {
                       onClick={(e) => {
                         axios({
                           method: "post",
-                          baseURL: `${process.env.REACT_APP_BASEURL}`,
+                          baseURL: `${process.env.REACT_APP_API_URL}`,
                           url: "/api/deletemyprod",
                           data: { pid: ele.id },
                         })

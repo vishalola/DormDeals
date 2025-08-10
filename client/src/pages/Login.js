@@ -25,7 +25,7 @@ function Login() {
     axios({
       method: "post",
       //   baseURL: `${process.env.REACT_APP_BASEURL}`,
-      baseURL: `${process.env.REACT_APP_BASEURL}`,
+      baseURL: `${process.env.REACT_APP_API_URL}`,
       url: "/api/login",
       data: data,
     })

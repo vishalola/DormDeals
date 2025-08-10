@@ -1,10 +1,13 @@
 #sellPage {
   width: 100vw;
   min-height: 100vh;
-  padding: 10vh 20vw;
+  padding: 10vh 10vw;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(to bottom, #89ffff, white);
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  font-family: 'Poppins', sans-serif;
 }
 
 #sellBox {
@@ -12,67 +15,355 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  width: 60vw;
-  border-radius: 30px;
-  padding: 10vh 10vw;
-  background-color: rgba(255, 255, 255, 0.903);
-  input {
-    font-size: 1.3rem;
-    padding: 3px 10px;
-    background-color: rgba(245, 222, 179, 0);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.385);
+  width: 100%;
+  max-width: 800px;
+  border-radius: 16px;
+  padding: 3rem;
+  background: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e5e5;
+  
+  input, textarea, select {
+    font-size: 1rem;
+    padding: 1rem 1.25rem;
+    border: 2px solid #e5e5e5;
+    border-radius: 12px;
+    background: white;
+    transition: all 0.3s ease;
+    color: #2c3e50;
+    font-family: inherit;
+    
+    &::placeholder {
+      color: #95a5a6;
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: #4a90e2;
+      box-shadow: 0 4px 20px rgba(74, 144, 226, 0.2);
+    }
+    
+    &:hover:not(:focus) {
+      border-color: #bdc3c7;
+    }
   }
-  input:focus {
-    outline: none;
-    border-bottom: 1px solid black;
+  
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
   }
+  
   button {
-    width: 50%;
-    height: 2.5rem;
-    background-color: green;
-    font-size: 1.2rem;
+    width: auto;
+    min-width: 200px;
+    height: 3rem;
+    background-color: #4a90e2;
+    font-size: 1rem;
     color: white;
-    border-radius: 10px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+    padding: 0 2rem;
+    
+    &:hover {
+      background-color: #357abd;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+    }
+    
+    &:disabled {
+      background-color: #95a5a6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
   }
 }
+
 .sellTitle {
-  font-size: 3rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  text-align: center;
 }
-.checkboxes {
+
+.sellSubtitle {
+  font-size: 1.1rem;
+  color: #7f8c8d;
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.formSection {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80%;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid #4a90e2;
+  padding-bottom: 0.5rem;
+}
+
+.checkboxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.checkboxItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 2px solid #e5e5e5;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: #f8f9fa;
+  
+  &:hover {
+    border-color: #4a90e2;
+    background: white;
+  }
+  
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    accent-color: #4a90e2;
+    cursor: pointer;
+  }
+  
+  label {
+    font-size: 0.95rem;
+    color: #2c3e50;
+    font-weight: 500;
+    cursor: pointer;
+    flex: 1;
+  }
+  
+  &.selected {
+    border-color: #4a90e2;
+    background: rgba(74, 144, 226, 0.05);
+  }
 }
 
 .sellinput {
-  span {
-    width: 10vw;
-    font-size: 1.1rem;
-  }
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  
+  label {
+    font-size: 1rem;
+    color: #2c3e50;
+    font-weight: 600;
+    
+    .required {
+      color: #ff6b6b;
+      margin-left: 0.25rem;
+    }
+  }
+  
+  .inputGroup {
+    position: relative;
+    
+    .inputIcon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #95a5a6;
+      font-size: 1.1rem;
+      pointer-events: none;
+    }
+    
+    input {
+      padding-left: 3rem;
+    }
+  }
+  
+  .helpText {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin-top: 0.25rem;
+    line-height: 1.4;
+  }
 }
 
-@media only screen and (max-width: 1000px) {
-  #sellPage {
-    padding: 10vh 5vw;
+.imageUpload {
+  border: 2px dashed #bdc3c7;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+  
+  &:hover {
+    border-color: #4a90e2;
+    background: rgba(74, 144, 226, 0.05);
   }
-  #sellBox {
-    width: 90vw;
-    padding: 10vh 5vw;
-    input {
-      font-size: 1rem;
+  
+  &.dragover {
+    border-color: #4a90e2;
+    background: rgba(74, 144, 226, 0.1);
+  }
+  
+  .uploadIcon {
+    font-size: 3rem;
+    color: #95a5a6;
+    margin-bottom: 1rem;
+  }
+  
+  .uploadText {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .uploadSubtext {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+  }
+  
+  input[type="file"] {
+    display: none;
+  }
+}
+
+.imagePreview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+  
+  .previewItem {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #e5e5e5;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .removeBtn {
+      position: absolute;
+      top: 0.25rem;
+      right: 0.25rem;
+      background: #ff6b6b;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      &:hover {
+        background: #ff5252;
+      }
     }
   }
-  .sellinput {
-    span {
-      width: 50vw;
-      font-size: 1rem;
+}
+
+.formActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e5e5;
+  
+  .btnSecondary {
+    background-color: #95a5a6;
+    
+    &:hover {
+      background-color: #7f8c8d;
+      box-shadow: 0 8px 25px rgba(149, 165, 166, 0.3);
     }
   }
-  .checkboxes {
+  
+  .btnPrimary {
+    background-color: #4a90e2;
+    
+    &:hover {
+      background-color: #357abd;
+      box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+    }
+  }
+}
+
+// Progress indicator
+.formProgress {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  
+  .progressBar {
     width: 100%;
+    max-width: 400px;
+    height: 4px;
+    background: #e5e5e5;
+    border-radius: 2px;
+    overflow: hidden;
+    
+    .progressFill {
+      height: 100%;
+      background: linear-gradient(90deg, #4a90e2, #357abd);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+  }
+}
+
+// Error and success states
+.errorMessage {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  .errorIcon {
+    font-size: 1rem;
+  }
+}
+
+.successMessage {
+  background: rgba(46, 204, 113, 0.1);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  color: #27ae60;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  .successIcon {
+    font-size: 1.2rem;
   }
 }

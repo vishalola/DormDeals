@@ -8,9 +8,9 @@ import mailsent from "../assets/mailsent.jpg";
 
 function Register() {
   const [emailSent, setEmailSent] = useState(false);
-  const [course, setCourse] = useState("B.Tech");
-  const [Btech, setBtech] = useState(true);
-  const [Mtech, setMtech] = useState(false);
+  const [course, setCourse] = useState("IPM");
+  const [IPM, setIPM] = useState(true);
+  const [IPL, setIPL] = useState(false);
   const [PhD, setPhD] = useState(false);
   const [data, setData] = useState({
     name: "",
@@ -30,56 +30,46 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const pattern = ".nitandhra.ac.in";
-    const inputPattern = data.mail.slice(
-      data.mail.length - 16,
-      data.mail.length
-    );
+  
     if (data.name === "") {
       toast.error("Name field required!");
       return;
     }
-    if (inputPattern !== pattern) {
-      toast.error("Please enter valid student mail-id!");
-      return;
-    }
-
+  
     if (data.year === "") {
       toast.error("Please enter which year you're from!");
       return;
     }
-
+  
     if (data.address === "") {
       toast.error("Address field required!");
       return;
     }
-
+  
     if (data.phone === "") {
       toast.error("Phone no. field is required!");
+      return;
     }
-
+  
     if (data.phone <= 1000000000 || data.phone >= 9999999999) {
       toast.error("Please enter valid phone no.!");
       return;
     }
-
+  
     if (data.password.length < 8) {
-      toast.error("Password should be 8 character long!");
+      toast.error("Password should be 8 characters long!");
       return;
     } else {
-      toast.loading("Processing", {
-        duration: 5000,
-      });
+      toast.loading("Processing", { duration: 5000 });
       axios({
         method: "post",
-        //   baseURL: `${process.env.REACT_APP_BASEURL}`,
-        baseURL: `${process.env.REACT_APP_BASEURL}`,
+        baseURL: `${process.env.REACT_APP_API_URL}`,
         url: "/api/register",
         data: data,
       })
         .then(function (response) {
           if (response.data.info === "userExist") {
-            toast.error("User already exist with this mail-id!");
+            toast.error("User already exists with this mail-id!");
           }
           if (response.data.info === "mailSent") {
             toast.success("Verification mail sent!");
@@ -135,34 +125,34 @@ function Register() {
                 autoComplete={"off"}
               />
               <div id={styles.checkboxes}>
-                <label htmlFor="btech">
+                <label htmlFor="ipm">
                   <input
                     type="radio"
-                    name="btech"
+                    name="ipm"
                     onChange={(e) => {
-                      setBtech(true);
-                      setCourse("B.Tech");
+                      setIPM(true);
+                      setCourse("IPM");
                       setPhD(false);
-                      setMtech(false);
+                      setIPL(false);
                     }}
-                    checked={Btech}
+                    checked={IPM}
                   />
-                  B.Tech
+                 IPM
                 </label>
 
-                <label htmlFor="mtech">
+                <label htmlFor="ipl">
                   <input
                     type="radio"
-                    name="mtech"
+                    name="ipl"
                     onChange={(e) => {
-                      setMtech(true);
-                      setCourse("M.Tech");
+                      setIPL(true);
+                      setCourse("IPL");
                       setPhD(false);
-                      setBtech(false);
+                      setIPM(false);
                     }}
-                    checked={Mtech}
+                    checked={IPL}
                   />
-                  M.Tech
+                  IPL
                 </label>
 
                 <label htmlFor="phd">
@@ -172,8 +162,8 @@ function Register() {
                     onChange={(e) => {
                       setPhD(true);
                       setCourse("PhD");
-                      setBtech(false);
-                      setMtech(false);
+                      setIPM(false);
+                      setIPL(false);
                     }}
                     checked={PhD}
                   />

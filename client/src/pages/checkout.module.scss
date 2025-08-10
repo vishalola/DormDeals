@@ -1,0 +1,158 @@
+.checkoutPage {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .checkoutContainer {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+  }
+  
+  .checkoutGrid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+  
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .shippingSection, .orderSummary {
+    h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.25rem;
+      color: #333;
+    }
+  }
+  
+  .formGroup {
+    margin-bottom: 1rem;
+  
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+  
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+  
+      &:focus {
+        outline: none;
+        border-color: #4a90e2;
+      }
+    }
+  }
+  
+  .formRow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  
+  .submitButton {
+    width: 100%;
+    padding: 1rem;
+    background: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.2s;
+  
+    &:hover {
+      background: #3a7bc8;
+    }
+  
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  }
+  
+  .orderItems {
+    margin-bottom: 2rem;
+  }
+  
+  .orderItem {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+  
+    img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+  
+    .itemDetails {
+      flex: 1;
+  
+      h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1rem;
+      }
+  
+      p {
+        margin: 0;
+        color: #666;
+      }
+    }
+  
+    .itemTotal {
+      font-weight: 600;
+    }
+  }
+  
+  .summaryTotals {
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+  
+    .totalRow {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+  
+    .grandTotal {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+  }
+  
+  .loading, .emptyCart {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+  }
+  
+  .emptyCart {
+    button {
+      padding: 0.75rem 1.5rem;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+  }

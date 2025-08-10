@@ -9,7 +9,7 @@ function Sell() {
   const [cat, setCat] = useState("table");
   const [id, setId] = useState("");
   const [cycle, setCycle] = useState(false);
-  const [table, setTable] = useState(true);
+  // const [table, setTable] = useState(true);
   const [drafter, setDrafter] = useState(false);
   const [coat, setCoat] = useState(false);
   const [chair, setChair] = useState(false);
@@ -31,7 +31,7 @@ function Sell() {
     }
     axios({
       method: "post",
-      baseURL: `${process.env.REACT_APP_BASEURL}`,
+      baseURL: `${process.env.REACT_APP_API_URL}`,
       url: "/api",
       data: { token: token },
     })
@@ -43,7 +43,7 @@ function Sell() {
         });
         axios({
           method: "post",
-          baseURL: `${process.env.REACT_APP_BASEURL}`,
+          baseURL: `${process.env.REACT_APP_API_URL}`,
           url: "/api/profile",
           data: { id: id },
         }).catch((err) => console.log(err));
@@ -79,7 +79,7 @@ function Sell() {
     toast.loading("Processing", { duration: 2000 });
     axios({
       method: "post",
-      baseURL: `${process.env.REACT_APP_BASEURL}`,
+      baseURL: `${process.env.REACT_APP_API_URL}`,
       url: "/api/sell",
       data: { pdata: data, id: id },
     })
@@ -95,7 +95,7 @@ function Sell() {
   return (
     <div id={styles.sellPage}>
       <div id={styles.sellBox}>
-        <p className={styles.sellTitle}>Sell</p>
+        <p className={styles.sellTitle}>Sell/Donate</p>
         <div className={styles.sellinput}>
           <span>Product name : </span>
           <input
@@ -138,7 +138,7 @@ function Sell() {
           ></input>
         </div>
         <div className={styles.checkboxes}>
-          <label htmlFor="table">
+          {/* <label htmlFor="table">
             <input
               type="radio"
               name="table"
@@ -154,7 +154,7 @@ function Sell() {
               checked={table}
             />
             Table
-          </label>
+          </label> */}
 
           <label htmlFor="cycle">
             <input
@@ -165,7 +165,7 @@ function Sell() {
                 setCat("cycle");
                 setOther(false);
                 setChair(false);
-                setTable(false);
+                // setTable(false);
                 setDrafter(false);
                 setCoat(false);
               }}
@@ -183,7 +183,7 @@ function Sell() {
                 setOther(false);
                 setChair(false);
                 setCycle(false);
-                setTable(false);
+                // setTable(false);
                 setCoat(false);
               }}
               checked={drafter}
@@ -200,7 +200,7 @@ function Sell() {
                 setOther(false);
                 setChair(true);
                 setCycle(false);
-                setTable(false);
+                // setTable(false);
                 setCoat(false);
               }}
               checked={chair}
@@ -217,7 +217,7 @@ function Sell() {
                 setOther(false);
                 setChair(false);
                 setCycle(false);
-                setTable(false);
+                // setTable(false);
                 setCoat(true);
               }}
               checked={coat}
@@ -234,7 +234,7 @@ function Sell() {
                 setOther(true);
                 setChair(false);
                 setCycle(false);
-                setTable(false);
+                // setTable(false);
                 setCoat(false);
               }}
               checked={other}
