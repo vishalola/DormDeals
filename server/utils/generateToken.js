@@ -7,7 +7,7 @@ const generateTokens = async (user) => {
     const accessToken = jwt.sign(payload, process.env.JWTPRIVATEKEY, {
       expiresIn: "14m",
     });
-    const refreshToken = jwt.sign(payload, process.env.JWTREFRESHPRIVATEKEY, {
+    const refreshToken = jwt.sign(payload, process.env.JWTREFRESHPK, {
       expiresIn: "30d",
     });
 
@@ -18,7 +18,7 @@ const generateTokens = async (user) => {
     return Promise.resolve({ accessToken, refreshToken });
   } catch (err) {
     return Promise.reject(err);
-  }
+}
 };
 
 module.exports = generateTokens;

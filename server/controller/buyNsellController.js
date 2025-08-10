@@ -16,73 +16,70 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(401).send({ message: "Invalid Email or Password" });
     }
-    const validPassword = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
+
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) {
       return res.status(401).send({ message: "Invalid Email or Password" });
     }
-    if (!user.verified) {
-      let token = await Token.findOne({ userId: user._id });
-      if (!token) {
-        token = await new Token({
-          userId: user._id,
-          token: crypto.randomBytes(32).toString("hex"),
-        }).save();
-        const url = `${process.env.BASE_URL}users/${user.id}/verify/${token.token}`;
-        await sendEmail(user.mail, "Verification of Email", url);
-      }
 
-      return res
-        .status(400)
-        .send({ message: "An Email sent to your account please verify" });
-    }
-
+    // Generate and store tokens
     const { accessToken, refreshToken } = await generateTokens(user);
-    const expiresAt = new Date(Date.now() + 14 * 60);
+
     res.status(200).send({
-      message: "logged in successfully",
-      refreshToken,
+      message: "Logged in successfully",
       accessToken,
+      refreshToken,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.mail,
+        role: user.role
+      }
     });
   } catch (error) {
-    console.log(error);
+    console.error("Login error:", error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
+
 
 const register = async (req, res) => {
-  try {
-    let user = await User.findOne({ mail: req.body.mail });
-    if (user) {
-      console.log("user exist");
-      return res.status(200).send({
-        message: "User with given email already Exist!",
-        info: "userExist",
-      });
+    try {
+        const { name, email, password } = req.body;
+
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: true, message: "User already exists" });
+        }
+
+        // Create user
+        const newUser = await User.create({ name, email, password });
+
+        // Generate tokens
+        const { accessToken, refreshToken } = await generateTokens(newUser);
+
+        // Optionally store refresh token in DB
+        newUser.refreshToken = refreshToken;
+        await newUser.save();
+
+        return res.status(201).json({
+            error: false,
+            message: "User registered and logged in successfully",
+            accessToken,
+            refreshToken,
+            user: {
+                id: newUser._id,
+                name: newUser.name,
+                email: newUser.email
+            }
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: true, message: "Server error" });
     }
-    const salt = await bcrypt.genSalt(Number(process.env.SALT));
-    const hashPassword = await bcrypt.hash(req.body.password, salt);
-
-    user = await new User({ ...req.body, password: hashPassword }).save();
-
-    const token = await new Token({
-      userId: user._id,
-      token: crypto.randomBytes(32).toString("hex"),
-    }).save();
-    const url = `Click this link to verify your email-id : ${process.env.BASE_URL}users/${user.id}/verify/${token.token}`;
-    await sendEmail(user.mail, "Verification of Mail", url);
-
-    res.status(201).send({
-      message: "An Email sent to your account, please verify.",
-      info: "mailSent",
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ message: "Internal Server Error" });
-  }
 };
+
 
 const verify = async (req, res) => {
   try {
@@ -211,7 +208,7 @@ const profile = async (req, res) => {
             pprice: pprice,
           };
           arr.push(temp);
-        }
+    }
       }
     }
     const mydata = await Product.find({ id: id });
@@ -231,10 +228,10 @@ const profile = async (req, res) => {
       res.status(400).send({
         error: true,
         message: "User not found",
-        data: user,
+      data: user,
         mybids: arr,
         myproducts: myprodData,
-      });
+    });
     }
     res
       .status(200)
@@ -244,7 +241,230 @@ const profile = async (req, res) => {
     res.status(400).send({ error: true });
   }
 };
+const Cart = require("../models/cart");
 
+// Add to cart
+const addToCart = async (req, res) => {
+  try {
+    const { userId, productId, quantity = 1 } = req.body;
+
+    // Validate input
+    if (!userId || !productId) {
+      return res.status(400).json({ 
+        error: true, 
+        message: "UserId and productId are required" 
+      });
+    }
+
+    // Check if product exists
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ 
+        error: true, 
+        message: "Product not found" 
+      });
+    }
+
+    // Find or create cart for user
+    let cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      // Create new cart if it doesn't exist
+      cart = new Cart({
+        userId,
+        items: [{ productId, quantity }]
+      });
+    } else {
+      // Check if product already exists in cart
+      const existingItemIndex = cart.items.findIndex(
+        item => item.productId.toString() === productId
+      );
+
+      if (existingItemIndex > -1) {
+        // Update quantity if product exists
+        cart.items[existingItemIndex].quantity += quantity;
+      } else {
+        // Add new product to cart
+        cart.items.push({ productId, quantity });
+      }
+    }
+
+    await cart.save();
+
+    res.status(200).json({ 
+      error: false, 
+      message: "Product added to cart successfully",
+      cart 
+    });
+  } catch (error) {
+    console.error("Add to cart error:", error);
+    res.status(500).json({ 
+      error: true, 
+      message: "Internal server error" 
+    });
+  }
+};
+
+// Get cart
+const getCart = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const cart = await Cart.findOne({ userId })
+      .populate('items.productId', 'pname pprice pimage');
+
+    if (!cart) {
+      return res.status(200).json({ 
+        error: false, 
+        message: "Cart is empty",
+        cart: { items: [] } 
+      });
+    }
+
+    res.status(200).json({ 
+      error: false, 
+      cart 
+    });
+  } catch (error) {
+    console.error("Get cart error:", error);
+    res.status(500).json({ 
+      error: true, 
+      message: "Internal server error" 
+    });
+  }
+};
+
+// Update cart item quantity
+const updateCartItem = async (req, res) => {
+  try {
+    const { userId, productId, quantity } = req.body;
+
+    if (!userId || !productId || quantity === undefined) {
+      return res.status(400).json({ 
+        error: true, 
+        message: "UserId, productId and quantity are required" 
+      });
+    }
+
+    const cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      return res.status(404).json({ 
+        error: true, 
+        message: "Cart not found" 
+      });
+    }
+
+    const itemIndex = cart.items.findIndex(
+      item => item.productId.toString() === productId
+    );
+
+    if (itemIndex === -1) {
+      return res.status(404).json({ 
+        error: true, 
+        message: "Product not found in cart" 
+      });
+    }
+
+    if (quantity <= 0) {
+      // Remove item if quantity is 0 or less
+      cart.items.splice(itemIndex, 1);
+    } else {
+      // Update quantity
+      cart.items[itemIndex].quantity = quantity;
+    }
+
+    await cart.save();
+
+    res.status(200).json({ 
+      error: false, 
+      message: "Cart updated successfully",
+      cart 
+    });
+  } catch (error) {
+    console.error("Update cart error:", error);
+    res.status(500).json({ 
+      error: true, 
+      message: "Internal server error" 
+    });
+  }
+};
+
+// Remove from cart
+const removeFromCart = async (req, res) => {
+  try {
+    const { userId, productId } = req.body;
+
+    if (!userId || !productId) {
+      return res.status(400).json({ 
+        error: true, 
+        message: "UserId and productId are required" 
+      });
+    }
+
+    const cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      return res.status(404).json({ 
+        error: true, 
+        message: "Cart not found" 
+      });
+    }
+
+    const initialLength = cart.items.length;
+    cart.items = cart.items.filter(
+      item => item.productId.toString() !== productId
+    );
+
+    if (cart.items.length === initialLength) {
+      return res.status(404).json({ 
+        error: true, 
+        message: "Product not found in cart" 
+      });
+    }
+
+    await cart.save();
+
+    res.status(200).json({ 
+      error: false, 
+      message: "Product removed from cart successfully",
+      cart 
+    });
+  } catch (error) {
+    console.error("Remove from cart error:", error);
+    res.status(500).json({ 
+      error: true, 
+      message: "Internal server error" 
+    });
+  }
+};
+
+// Clear cart
+const clearCart = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    const result = await Cart.deleteOne({ userId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ 
+        error: true, 
+        message: "Cart not found" 
+      });
+    }
+
+    res.status(200).json({ 
+      error: false, 
+      message: "Cart cleared successfully" 
+    });
+  } catch (error) {
+    console.error("Clear cart error:", error);
+    res.status(500).json({ 
+      error: true, 
+      message: "Internal server error" 
+    });
+  }
+};
 const deletemyprod = async (req, res) => {
   try {
     const { pid } = req.body;
@@ -274,12 +494,11 @@ const delAcc = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-    const id = req.body.id;
-    await UserToken.deleteOne({ userId: id });
-    res.status(200).send({ error: false, message: "Logged out successfully" });
+    const { refreshToken } = req.body;
+    await UserToken.deleteOne({ token: refreshToken });
+    res.status(200).send({ message: "Logged out successfully" });
   } catch (error) {
-    console.log(error);
-    res.status(400).send({ error: true });
+    res.status(500).send({ message: "Internal Server Error" });
   }
 };
 
@@ -517,4 +736,9 @@ module.exports = {
   deletemyprod,
   confirmdeal,
   cancelnotification,
+  addToCart,
+  getCart,
+  updateCartItem,
+  removeFromCart,
+  clearCart
 };

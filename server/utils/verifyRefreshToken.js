@@ -1,24 +1,34 @@
-const UserToken = require("../models/userToken.js");
+const UserToken = require("../models/userToken");
 const jwt = require("jsonwebtoken");
 
 const verifyRefreshToken = async (refreshToken) => {
-  const privateKey = process.env.JWTREFRESHPRIVATEKEY;
-  return new Promise((resolve, reject) => {
-    const tokenFound = UserToken.findOne({
-      token: refreshToken,
-    });
-    if (!tokenFound) return reject({ error: true, message: "NOT FOUND" });
-    jwt.verify(refreshToken, privateKey, (err, tokenDetails) => {
-      if (err) {
-        return reject({ error: false, message: "Invalid refresh token" });
-      }
-      resolve({
-        tokenDetails,
-        error: false,
-        message: "Valid refresh token",
-      });
-    });
-  });
+    try {
+        const privateKey = process.env.JWTREFRESHPK; // Must match generation key
+        
+        if (!privateKey) {
+            throw { error: true, message: "Server configuration error" };
+        }
+
+        const tokenFound = await UserToken.findOne({ token: refreshToken });
+        
+        if (!tokenFound) {
+            throw { error: true, message: "Invalid session - please login again" };
+        }
+
+        const tokenDetails = jwt.verify(refreshToken, privateKey);
+        return {
+            tokenDetails,
+            error: false,
+            message: "Valid refresh token"
+        };
+    } catch (error) {
+        console.error("Refresh token verification error:", error);
+        throw { 
+            error: true, 
+            message: error.message || "Invalid refresh token",
+            expired: error.name === 'TokenExpiredError'
+        };
+    }
 };
 
 module.exports = verifyRefreshToken;

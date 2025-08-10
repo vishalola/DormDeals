@@ -4,18 +4,18 @@ const Schema = mongoose.Schema;
 const userTokenSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
-    required: true,
+    required: true,// Make sure this matches your User model name
   },
   token: {
     type: String,
     required: true,
+    unique: true // Important to prevent duplicates
   },
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 30 * 86400,
-  },
+    expires: 604800 // 7 days in seconds (matches token expiry)
+  }
 });
 
-const UserToken = mongoose.model("UserToken", userTokenSchema, "userTokens");
-module.exports = UserToken;
+module.exports = mongoose.model("UserToken", userTokenSchema);
