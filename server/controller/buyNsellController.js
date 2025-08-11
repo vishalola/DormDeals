@@ -529,12 +529,15 @@ const displayProd = async (req, res) => {
 const searchproduct = async (req, res) => {
   try {
     const { searchval } = req.body;
-    const data = await Product.find({ pname: searchval });
+    const data = await Product.find({
+      pname: { $regex: searchval, $options: "i" }
+    });
     res.status(200).send({ mysearchdata: data });
   } catch (error) {
     res.status(400).send({ error: true });
   }
 };
+
 
 const prodData = async (req, res) => {
   try {
