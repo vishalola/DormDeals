@@ -9,7 +9,17 @@ const jwt = require("jsonwebtoken");
 const UserToken = require("../models/userToken");
 const verifyRefreshToken = require("../utils/verifyRefreshToken");
 const generateTokens = require("../utils/generateToken.js");
+const stats = async (req, res) => {
+  try {
+    const totalListings = await Product.countDocuments();
+    const totalUsers = await User.countDocuments();
 
+    res.json({ totalListings, totalUsers });
+  } catch (error) {
+    console.error("Error fetching stats:", error);
+    res.status(500).json({ error: "Failed to fetch stats" });
+  }
+}
 const login = async (req, res) => {
   try {
     const user = await User.findOne({ mail: req.body.mail });
