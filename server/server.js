@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 const corsOptions = {
-  origin: 'http://localhost:3000', // Match your client's origin
+  origin: '*', // Match your client's origin
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
