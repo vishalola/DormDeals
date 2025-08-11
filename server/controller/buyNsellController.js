@@ -19,7 +19,7 @@ const stats = async (req, res) => {
     console.error("Error fetching stats:", error);
     res.status(500).json({ error: "Failed to fetch stats" });
   }
-}
+};
 const login = async (req, res) => {
   try {
     const user = await User.findOne({ mail: req.body.mail });
