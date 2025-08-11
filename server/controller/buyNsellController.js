@@ -731,6 +731,7 @@ const deletemybid = async (req, res) => {
 };
 
 module.exports = {
+  stats,
   prodData,
   deletemybid,
   login,
