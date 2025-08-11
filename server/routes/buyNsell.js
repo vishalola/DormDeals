@@ -28,4 +28,5 @@ router.get('/cart/:userId', buyNsell.getCart);
 router.put('/cart/update', buyNsell.updateCartItem);
 router.delete('/cart/remove', buyNsell.removeFromCart);
 router.delete('/cart/clear', buyNsell.clearCart);
+router.get('/admin/stats', buyNsell.stats);
 module.exports = router;
