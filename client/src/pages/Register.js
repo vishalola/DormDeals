@@ -5,8 +5,10 @@ import Design from "../components/Design/Design";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import mailsent from "../assets/mailsent.jpg";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
   const [emailSent, setEmailSent] = useState(false);
   const [course, setCourse] = useState("IPM");
   const [IPM, setIPM] = useState(true);
@@ -68,13 +70,12 @@ function Register() {
         data: data,
       })
         .then(function (response) {
-          if (response.data.info === "userExist") {
-            toast.error("User already exists with this mail-id!");
-          }
-          if (response.data.info === "mailSent") {
-            toast.success("Verification mail sent!");
-            setEmailSent(true);
-          }
+            toast.success("Account Registered");
+            localStorage.setItem(
+              "token",
+              JSON.stringify(response.data.refreshToken)
+            );
+            navigate("/");
         })
         .catch(function (error) {
           console.log(error);
@@ -93,17 +94,6 @@ function Register() {
     <div id="login" className={styles.login}>
       <Design />
       <div id={styles.loginFormContainer}>
-        {emailSent ? (
-          <div id={styles.emailSent}>
-            <img src={mailsent} alt="mail-sent" />
-            <div id={styles.verifymail}>Verify your Email</div>
-            <div>
-              We have sent a verification link to <span>{data.mail},</span> in
-              order to activate your account
-            </div>
-          </div>
-        ) : (
-          <>
             <p>SignUp</p>
             <form id={styles.loginForm} onSubmit={handleSubmit}>
               <input
@@ -221,8 +211,6 @@ function Register() {
                 Register
               </button>
             </form>
-          </>
-        )}
       </div>
     </div>
   );
